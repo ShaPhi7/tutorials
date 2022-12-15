@@ -1,5 +1,6 @@
 package com.baeldung.crypto.utils;
 
+import java.nio.charset.StandardCharsets;
 import java.security.AlgorithmParameters;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -11,6 +12,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class CryptoUtils {
 
@@ -18,6 +20,25 @@ public class CryptoUtils {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(256);
         return keyGenerator.generateKey();
+    }
+    
+    /*
+     * Allows us to generate a deterministic key, for the purposes of producing reliable
+     * and consistent demo code! For a random key, consider using the generateKey method above.
+     */
+    public static SecretKey getKeyForText(String secretText) throws GeneralSecurityException {
+    	byte[] keyBytes = secretText.getBytes(StandardCharsets.UTF_8);
+    	return new SecretKeySpec(keyBytes, "AES"); 
+    }
+    
+    /*
+     * Normally you would generate a key as per above, however
+     * we'll use this method to get the same key repeatedly and ensure
+     * that our test methods always run the same way and are deterministic.
+     */
+    public static SecretKey getFixedKey() throws GeneralSecurityException {
+    	String secretText = "BaeldungIsASuperCoolSite";
+    	return getKeyForText(secretText);
     }
 
     public static IvParameterSpec getIV() {
