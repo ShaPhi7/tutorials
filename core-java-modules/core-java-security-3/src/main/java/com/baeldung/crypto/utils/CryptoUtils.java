@@ -23,8 +23,9 @@ public class CryptoUtils {
     }
     
     /*
-     * Allows us to generate a deterministic key, for the purposes of producing reliable
-     * and consistent demo code! For a random key, consider using the generateKey method above.
+     * Allows us to generate a deterministic key, for the purposes 
+     * of producing reliable and consistent demo code & tests!
+     * For a random key, consider using the generateKey method above.
      */
     public static SecretKey getKeyForText(String secretText) throws GeneralSecurityException {
     	byte[] keyBytes = secretText.getBytes(StandardCharsets.UTF_8);
@@ -32,7 +33,7 @@ public class CryptoUtils {
     }
     
     /*
-     * Normally you would generate a key as per above, however
+     * Normally we would generate a key as per above, however
      * we'll use this method to get the same key repeatedly and ensure
      * that our test methods always run the same way and are deterministic.
      */

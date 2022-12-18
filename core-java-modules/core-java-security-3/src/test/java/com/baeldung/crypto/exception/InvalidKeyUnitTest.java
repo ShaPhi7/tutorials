@@ -23,9 +23,9 @@ public class InvalidKeyUnitTest {
 	private SecretKey key;
 	
 	@Before
-	public void generateKey() throws GeneralSecurityException
+	public void before() throws GeneralSecurityException
 	{
-		//key = CryptoUtils.generateKey();
+		//key = CryptoUtils.getFixedKey();
 	}
 	
 	@Test

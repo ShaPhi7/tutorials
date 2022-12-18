@@ -1,12 +1,11 @@
 package com.baeldung.crypto.exception;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 
-public class NoSuchX {
+public class NoSuchAlgorithmExamples {
 
 	public static Cipher getCipherInstanceWithBadAlgorithm() throws NoSuchAlgorithmException, NoSuchPaddingException
 	{

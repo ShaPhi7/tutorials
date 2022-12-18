@@ -1,16 +1,9 @@
 package com.baeldung.crypto.exception;
 
 import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,27 +16,38 @@ public class BadPaddingUnitTest {
 	private SecretKey key;
 	
 	@Before
-	public void generateKey() throws GeneralSecurityException
+	public void before() throws GeneralSecurityException
 	{
-		//key = CryptoUtils.generateKey();
-	}
-	
-	@Test
-	public void givenTwoDifferentKeys_whenDecrypting_thenBadPaddingExceptionIsThrown() throws GeneralSecurityException
-	{
-		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.usingWrongKeys());
-	}
-	
-	@Test
-	public void givenTwoDifferentAlgorithms_whenDecrypting_thenBadPaddingExceptionIsThrown() throws GeneralSecurityException
-	{
-		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.usingWrongAlgorithm());
+		key = CryptoUtils.getFixedKey();
 	}
 	
 	@Test
 	public void givenTwoDifferentAlgorithmPaddings_whenDecrypting_thenBadPaddingExceptionIsThrown() throws GeneralSecurityException
 	{
-		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.usingWrongPadding());
+		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.encryptAndDecryptUsingDifferentPaddings(key));
 	}
 	
+	@Test
+	public void givenTwoDifferentKeys_whenDecrypting_thenBadPaddingExceptionIsThrown() throws GeneralSecurityException
+	{
+		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.encryptAndDecryptUsingDifferentKeys());
+	}
+	
+	@Test
+	public void givenTwoDifferentAlgorithms_whenDecrypting_thenBadPaddingExceptionIsThrown() throws GeneralSecurityException
+	{
+		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.encryptAndDecryptUsingDifferentAlgorithms(key));
+	}	
+	
+	@Test
+	public void givenPlainText_whenUsingSameVariablesForEncrpytAndDecrypt_thenNoExceptionIsThrown() throws GeneralSecurityException
+	{
+		String plainText = "12345678901234567890";
+		byte[] bytes = plainText.getBytes();
+		
+		BadPadding.encryptAndDecryptUsingSamePaddingKeyAndAlgorithm(key, bytes);
+		String decryptedText = new String(bytes);
+		
+		Assert.assertEquals(plainText, decryptedText);
+	}	
 }
