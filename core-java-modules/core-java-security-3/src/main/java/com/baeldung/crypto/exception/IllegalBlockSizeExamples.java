@@ -13,7 +13,7 @@ public class IllegalBlockSizeExamples {
 
 	public static byte[] encryptWithoutPadding(SecretKey key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException
 	{
-		String sampleText = "12345678901234567890";
+		String sampleText = "https://www.baeldung.com/";
 		byte[] plainTextBytes = sampleText.getBytes();
 		
 		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
@@ -22,10 +22,11 @@ public class IllegalBlockSizeExamples {
 		return cipher.doFinal(plainTextBytes);
 	}
 	
+	//TODO - I think this is fine but should it passing in some stuff to decrypt, rather than listing here?
 	public static byte[] decryptTextThatIsNotEncrypted(SecretKey key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException
 	{
 		//note that this text is not encrypted at any point in this method.
-		String sampleText = "12345678901234567890";
+		String sampleText = "https://www.baeldung.com/";
 		byte[] unencryptedCipherTextBytes = sampleText.getBytes();
 		
 		return decryptWithPadding(key, unencryptedCipherTextBytes);

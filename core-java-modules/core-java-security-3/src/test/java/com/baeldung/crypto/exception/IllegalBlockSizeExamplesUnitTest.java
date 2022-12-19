@@ -41,7 +41,7 @@ public class IllegalBlockSizeExamplesUnitTest {
 	@Test
 	public void GivenEncryptedPlainText_whenDecrypting_thenReturnsPlainText() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
 	{
-		String plainText = "12345678901234567890";
+		String plainText = "https://www.baeldung.com/";
 		byte[] plainTextBytes = plainText.getBytes();
 		
 		//TODO - move to a utils class?

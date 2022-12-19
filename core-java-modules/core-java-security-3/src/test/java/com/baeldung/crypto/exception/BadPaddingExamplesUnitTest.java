@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import com.baeldung.crypto.utils.CryptoUtils;
 
-public class BadPaddingUnitTest {
+public class BadPaddingExamplesUnitTest {
 
 	private SecretKey key;
 	
@@ -24,28 +24,28 @@ public class BadPaddingUnitTest {
 	@Test
 	public void givenTwoDifferentAlgorithmPaddings_whenDecrypting_thenBadPaddingExceptionIsThrown() throws GeneralSecurityException
 	{
-		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.encryptAndDecryptUsingDifferentPaddings(key));
+		Assert.assertThrows(BadPaddingException.class, () -> BadPaddingExamples.encryptAndDecryptUsingDifferentPaddings(key));
 	}
 	
 	@Test
 	public void givenTwoDifferentKeys_whenDecrypting_thenBadPaddingExceptionIsThrown() throws GeneralSecurityException
 	{
-		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.encryptAndDecryptUsingDifferentKeys());
+		Assert.assertThrows(BadPaddingException.class, () -> BadPaddingExamples.encryptAndDecryptUsingDifferentKeys());
 	}
 	
 	@Test
 	public void givenTwoDifferentAlgorithms_whenDecrypting_thenBadPaddingExceptionIsThrown() throws GeneralSecurityException
-	{
-		Assert.assertThrows(BadPaddingException.class, () -> BadPadding.encryptAndDecryptUsingDifferentAlgorithms(key));
+	{	
+		Assert.assertThrows(BadPaddingException.class, () -> BadPaddingExamples.encryptAndDecryptUsingDifferentAlgorithms(key));
 	}	
 	
 	@Test
 	public void givenPlainText_whenUsingSameVariablesForEncrpytAndDecrypt_thenNoExceptionIsThrown() throws GeneralSecurityException
 	{
-		String plainText = "12345678901234567890";
+		String plainText = "https://www.baeldung.com/";
 		byte[] bytes = plainText.getBytes();
 		
-		BadPadding.encryptAndDecryptUsingSamePaddingKeyAndAlgorithm(key, bytes);
+		BadPaddingExamples.encryptAndDecryptUsingSamePaddingKeyAndAlgorithm(key, bytes);
 		String decryptedText = new String(bytes);
 		
 		Assert.assertEquals(plainText, decryptedText);
