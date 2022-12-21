@@ -18,38 +18,39 @@ import com.baeldung.crypto.utils.CryptoUtils;
 public class IllegalBlockSizeExamplesUnitTest {
 
 	private SecretKey key;
-	
+	private byte[] plainTextBytes;
+	private String plainText;
+
 	@Before
-	public void before() throws GeneralSecurityException
-	{
+	public void before() throws GeneralSecurityException {
 		key = CryptoUtils.getFixedKey();
+
+		plainText = "https://www.baeldung.com/";
+		plainTextBytes = plainText.getBytes();
 	}
-	
+
 	@Test
-	public void whenEncryptingPlainTextWithoutPadding_thenIllegalBlockSizeExceptionIsThrown() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
-	{	
-		Assert.assertThrows(IllegalBlockSizeException.class, () -> IllegalBlockSizeExamples.encryptWithoutPadding(key));
+	public void whenEncryptingPlainTextWithoutPadding_thenIllegalBlockSizeExceptionIsThrown()
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException,
+			BadPaddingException {
+		Assert.assertThrows(IllegalBlockSizeException.class,
+				() -> IllegalBlockSizeExamples.encryptWithoutPadding(key, plainTextBytes));
 	}
-	
+
 	@Test
-	public void whenDecryptingCipherTextThatWasNotEncrypted_thenIllegalBlockSizeExceptionIsThrown() throws GeneralSecurityException
-	{	
-		//note that the bytes we're passing into our decrypt method are not encrypted.
-		Assert.assertThrows(IllegalBlockSizeException.class, () -> IllegalBlockSizeExamples.decryptTextThatIsNotEncrypted(key));
+	public void whenDecryptingCipherTextThatWasNotEncrypted_thenIllegalBlockSizeExceptionIsThrown()
+			throws GeneralSecurityException {
+		Assert.assertThrows(IllegalBlockSizeException.class,
+				() -> IllegalBlockSizeExamples.decryptTextThatIsNotEncrypted(key));
 	}
-	
+
 	@Test
-	public void GivenEncryptedPlainText_whenDecrypting_thenReturnsPlainText() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
-	{
-		String plainText = "https://www.baeldung.com/";
-		byte[] plainTextBytes = plainText.getBytes();
-		
-		//TODO - move to a utils class?
-		byte[] cipherTextBytes = IllegalBlockSizeExamples.encryptWithPadding(key, plainTextBytes);
-		
-		byte[] decryptedBytes = IllegalBlockSizeExamples.decryptWithPadding(key, cipherTextBytes);
-		String decryptedText = new String(decryptedBytes);
-		
-		Assert.assertEquals(plainText, decryptedText);
+	public void whenEncryptingAndDecryptingWithPadding_thenNoExceptionThrown() throws NoSuchAlgorithmException,
+			NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+		byte[] cipherTextBytes = CryptoUtils.encryptWithPadding(key, plainTextBytes);
+
+		byte[] decryptedBytes = CryptoUtils.decryptWithPadding(key, cipherTextBytes);
+
+		Assert.assertEquals(plainText, new String(decryptedBytes));
 	}
 }
